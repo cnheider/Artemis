@@ -26,26 +26,26 @@ namespace Artemis.Plugins.Modules.Games.R3E.DataModels
             Penalties = new R3EDataModelPenalties(_data);
         }
 
-        [DataModelProperty(Name = "Game", Description = "Infos about the game-state")]
-        private R3EDataModelGame Game { get; }
+        [DataModelProperty(Name = "Game", Description = "Info about the game-state")]
+        public R3EDataModelGame Game { get; }
 
-        [DataModelProperty(Name = "Session", Description = "Infos about the current session")]
-        private R3EDataModelSession Session { get; }
+        [DataModelProperty(Name = "Session", Description = "Info about the current session")]
+        public R3EDataModelSession Session { get; }
 
-        [DataModelProperty(Name = "Flags", Description = "Infos about flags")]
-        private R3EDataModelFlags Flags { get; }
+        [DataModelProperty(Name = "Flags", Description = "Info about flags")]
+        public R3EDataModelFlags Flags { get; }
 
-        [DataModelProperty(Name = "Car", Description = "Infos about the state of the car")]
-        private R3EDataModelCar Car { get; }
+        [DataModelProperty(Name = "Car", Description = "Info about the state of the car")]
+        public R3EDataModelCar Car { get; }
 
-        [DataModelProperty(Name = "Pit", Description = "Infos about the pit")]
-        private R3EDataModelPit Pit { get; }
+        [DataModelProperty(Name = "Pit", Description = "Info about the pit")]
+        public R3EDataModelPit Pit { get; }
 
-        [DataModelProperty(Name = "Scoring", Description = "Infos about the current player position etc.")]
-        private R3EDataModelScoring Scoring { get; }
+        [DataModelProperty(Name = "Scoring", Description = "Info about the current player position etc.")]
+        public R3EDataModelScoring Scoring { get; }
 
-        [DataModelProperty(Name = "Scoring", Description = "Infos about penalties")]
-        private R3EDataModelPenalties Penalties { get; }
+        [DataModelProperty(Name = "Scoring", Description = "Info about penalties")]
+        public R3EDataModelPenalties Penalties { get; }
     }
 
     public class R3EDataModelGame
@@ -275,10 +275,10 @@ namespace Artemis.Plugins.Modules.Games.R3E.DataModels
         [DataModelProperty(Name = "Push to pass activations left", Description = "Number of remaining push to pass activations")]
         public int PTPActivationsLeft => Data.PushToPass.AmountLeft;
 
-        [DataModelProperty(Name = "Tires", Description = "Infos about the tires")]
+        [DataModelProperty(Name = "Tires", Description = "Info about the tires")]
         public R3EDataModelTires Tires { get; }
 
-        [DataModelProperty(Name = "Damage", Description = "Infos about the damage of the car")]
+        [DataModelProperty(Name = "Damage", Description = "Info about the damage of the car")]
         public R3EDataModelDamage Damage { get; }
 
         [DataModelProperty(Name = "Velocity", Description = "Car velocity in meter per second (m/s)")]
@@ -564,16 +564,16 @@ namespace Artemis.Plugins.Modules.Games.R3E.DataModels
             RearRight = new R3EDataModelTire(_data, d => d.RearRight, t => t.RearRight, () => (TireType)Data.TireTypeRear, () => (TireSubtype)Data.TireSubtypeRear);
         }
 
-        [DataModelProperty(Name = "Front Left", Description = "Infos about the front left tire")]
+        [DataModelProperty(Name = "Front Left", Description = "Info about the front left tire")]
         public R3EDataModelTire FrontLeft { get; }
 
-        [DataModelProperty(Name = "Front Right", Description = "Infos about the front right tire")]
+        [DataModelProperty(Name = "Front Right", Description = "Info about the front right tire")]
         public R3EDataModelTire FrontRight { get; }
 
-        [DataModelProperty(Name = "Rear Left", Description = "Infos about the rear left tire")]
+        [DataModelProperty(Name = "Rear Left", Description = "Info about the rear left tire")]
         public R3EDataModelTire RearLeft { get; }
 
-        [DataModelProperty(Name = "Rear Right", Description = "Infos about the rear right tire")]
+        [DataModelProperty(Name = "Rear Right", Description = "Info about the rear right tire")]
         public R3EDataModelTire RearRight { get; }
     }
 
