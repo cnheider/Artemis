@@ -1,0 +1,7 @@
+{
+  "Guid": "8d471057-2b68-4599-8d48-a06dd194e339",
+  "Name": "Race Room Racing Experience",
+  "Description": "Adds support for the data model of Race Room Racing Experience",
+  "Version": "1.0.0.0",
+  "Main": "Artemis.Plugins.Modules.Games.R3E.dll"
+}
