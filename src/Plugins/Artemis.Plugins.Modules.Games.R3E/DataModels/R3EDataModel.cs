@@ -92,9 +92,6 @@ namespace Artemis.Plugins.Modules.Games.R3E.DataModels
 
         [DataModelProperty(Name = "Start lights", Description = "Which phase start lights are in; -1 = unavailable, 0 = off, 1-5 = redlight on and counting down, 6 = greenlight on")]
         public int StartLights => Data.StartLights;
-
-        [DataModelProperty(Name = "Pit speed limit", Description = "The current pit speed limit in meters per second (m/s).")]
-        public float SessionPitSpeedLimit => Data.SessionPitSpeedLimit;
     }
 
     public class R3EDataModelFlags
