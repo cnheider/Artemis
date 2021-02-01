@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -73,40 +73,48 @@ namespace Artemis.Core.DataModelExpansions
         /// <param name="key">The key of the child, must be unique to this data model</param>
         /// <param name="name">An optional name, if not provided the key will be used in a humanized form</param>
         /// <param name="description">An optional description</param>
-        public T AddDynamicChild<T>(T dynamicDataModel, string key, string? name = null, string? description = null) where T : DataModel
+    public T AddDynamicChild<T>(T dynamicDataModel, string key, string? name = null, string? description = null) where T : DataModel
+    {
+        return AddDynamicChild(dynamicDataModel, key, new DataModelPropertyAttribute
         {
-            if (dynamicDataModel == null)
-                throw new ArgumentNullException(nameof(dynamicDataModel));
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
-            if (key.Contains('.'))
-                throw new ArtemisCoreException("The provided key contains an illegal character (.)");
-            if (_dynamicDataModels.ContainsKey(key))
-                throw new ArtemisCoreException($"Cannot add a dynamic data model with key '{key}' " +
-                                               "because the key is already in use on by another dynamic property this data model.");
+            Name = string.IsNullOrWhiteSpace(name) ? key.Humanize() : name,
+            Description = description,
+            Affix = "MyAffix"
+        });
+    }
 
-            if (_dynamicDataModels.ContainsValue(dynamicDataModel))
-            {
-                string existingKey = _dynamicDataModels.First(kvp => kvp.Value == dynamicDataModel).Key;
-                throw new ArtemisCoreException($"Cannot add a dynamic data model with key '{key}' " +
-                                               $"because the dynamic data model is already added with key '{existingKey}.");
-            }
+    public T AddDynamicChild<T>(T dynamicDataModel, string key, DataModelPropertyAttribute propertyDescription) where T : DataModel
+    {
+        if (dynamicDataModel == null)
+            throw new ArgumentNullException(nameof(dynamicDataModel));
+        if (key == null)
+            throw new ArgumentNullException(nameof(key));
+        if (propertyDescription == null)
+            throw new ArgumentNullException(nameof(propertyDescription));
+        if (key.Contains('.'))
+            throw new ArtemisCoreException("The provided key contains an illegal character (.)");
+        if (_dynamicDataModels.ContainsKey(key))
+            throw new ArtemisCoreException($"Cannot add a dynamic data model with key '{key}' " +
+                                            "because the key is already in use on by another dynamic property this data model.");
 
-            if (GetType().GetProperty(key) != null)
-                throw new ArtemisCoreException($"Cannot add a dynamic data model with key '{key}' " +
-                                               "because the key is already in use by a static property on this data model.");
-
-            dynamicDataModel.Feature = Feature;
-            dynamicDataModel.DataModelDescription = new DataModelPropertyAttribute
-            {
-                Name = string.IsNullOrWhiteSpace(name) ? key.Humanize() : name,
-                Description = description
-            };
-            _dynamicDataModels.Add(key, dynamicDataModel);
-
-            OnDynamicDataModelAdded(new DynamicDataModelEventArgs(dynamicDataModel, key));
-            return dynamicDataModel;
+        if (_dynamicDataModels.ContainsValue(dynamicDataModel))
+        {
+            string existingKey = _dynamicDataModels.First(kvp => kvp.Value == dynamicDataModel).Key;
+            throw new ArtemisCoreException($"Cannot add a dynamic data model with key '{key}' " +
+                                            $"because the dynamic data model is already added with key '{existingKey}.");
         }
+
+        if (GetType().GetProperty(key) != null)
+            throw new ArtemisCoreException($"Cannot add a dynamic data model with key '{key}' " +
+                                            "because the key is already in use by a static property on this data model.");
+
+        dynamicDataModel.Feature = Feature;
+        dynamicDataModel.DataModelDescription = propertyDescription;
+        _dynamicDataModels.Add(key, dynamicDataModel);
+
+        OnDynamicDataModelAdded(new DynamicDataModelEventArgs(dynamicDataModel, key));
+        return dynamicDataModel;
+    }
 
         /// <summary>
         ///     Removes a dynamic data model from the data model by its key
